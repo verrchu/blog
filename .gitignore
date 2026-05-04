@@ -1,0 +1,9 @@
+/tmp/
+
+# Hugo
+public/
+resources/
+.hugo_build.lock
+
+# Rust
+target/

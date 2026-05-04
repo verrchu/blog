@@ -1,0 +1,13 @@
+{{- /*
+  Include a file from the page bundle as a syntax-highlighted code block.
+
+  Usage: {{< code src="examples/step-1.rs" lang="rust" >}}
+
+  `src` is interpreted relative to the page bundle's directory.
+*/ -}}
+{{- $src := .Get "src" -}}
+{{- $lang := .Get "lang" | default "text" -}}
+{{- $page_dir := .Page.File.Dir -}}
+{{- $full_path := path.Join "posts" $page_dir $src -}}
+{{- $code := readFile $full_path -}}
+{{- highlight (trim $code "\n") $lang "" -}}

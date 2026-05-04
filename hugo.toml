@@ -1,0 +1,10 @@
+baseURL = "http://localhost:1313/"
+locale = "en-us"
+title = "Blog"
+contentDir = "posts"
+
+[markup]
+  [markup.highlight]
+    style = "github-dark"
+    noClasses = false
+    lineNos = false
