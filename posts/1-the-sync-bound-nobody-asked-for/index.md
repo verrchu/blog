@@ -48,21 +48,22 @@ too — and that breaks the implicit `Sync` requirement from `&self`.
 
 ```text
 error: future cannot be sent between threads safely
-  --> examples/step-2.rs:20:25
+  --> examples/step-2.rs:14:25
    |
-20 |     async fn work(&self) {}
+14 |     async fn work(&self) {}
    |                         ^ future returned by `work` is not `Send`
    |
    = help: within `MyWorker`, the trait `Sync` is not implemented for `Cell<()>`
+   = note: if you want to do aliasing and mutation between multiple threads, use `std::sync::RwLock`
 note: captured value is not `Send` because `&` references cannot be sent unless their referent is `Sync`
-  --> examples/step-2.rs:20:19
+  --> examples/step-2.rs:14:19
    |
-20 |     async fn work(&self) {}
+14 |     async fn work(&self) {}
    |                   ^^^^^ has type `&MyWorker` which is not `Send`, because `MyWorker` is not `Sync`
 note: required by a bound in `Worker::work::{anon_assoc#0}`
-  --> examples/step-2.rs:13:50
+  --> examples/step-2.rs:4:50
    |
-13 |     fn work(&self) -> impl Future<Output = ()> + Send;
+ 4 |     fn work(&self) -> impl Future<Output = ()> + Send;
    |                                                  ^^^^ required by this bound in `Worker::work::{anon_assoc#0}`
 ```
 

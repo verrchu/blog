@@ -6,4 +6,24 @@
     </header>
     {{ .Content }}
 </article>
+
+{{ if not (eq .Params.comments false) }}
+<section class="comments">
+    <script src="https://giscus.app/client.js"
+            data-repo="verrchu/blog"
+            data-repo-id="R_kgDOSUiLUA"
+            data-category="Comments"
+            data-category-id="DIC_kwDOSUiLUM4C8Xov"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="0"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="dark_high_contrast"
+            data-lang="en"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
+{{ end }}
 {{ end }}

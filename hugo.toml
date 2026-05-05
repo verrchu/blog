@@ -6,5 +6,5 @@ contentDir = "posts"
 [markup]
   [markup.highlight]
     style = "github-dark"
-    noClasses = false
+    noClasses = true
     lineNos = false

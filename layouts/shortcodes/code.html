@@ -10,4 +10,4 @@
 {{- $page_dir := .Page.File.Dir -}}
 {{- $full_path := path.Join "posts" $page_dir $src -}}
 {{- $code := readFile $full_path -}}
-{{- highlight (trim $code "\n") $lang "" -}}
+{{- highlight (trim $code "\n") $lang "linenos=table" -}}
