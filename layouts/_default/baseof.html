@@ -29,15 +29,19 @@
         nav.site-nav { margin-bottom: 2rem; font-size: 0.9rem; }
         nav.site-nav a { color: #9ea7b3; text-decoration: none; }
         nav.site-nav a:hover { color: #f0f3f6; }
+        .home-header { padding-bottom: 1rem; border-bottom: 1px solid #7a828e; margin-bottom: 1.5rem; }
+        .home-header h1 { margin-bottom: 0; }
         ul.post-list { list-style: none; padding: 0; }
-        ul.post-list li { margin-bottom: 1rem; }
-        ul.post-list .post-date { display: inline; margin-left: 0.5rem; }
+        ul.post-list li { padding: 0.75rem 0; border-bottom: 1px solid #272b33; display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+        ul.post-list li:last-child { border-bottom: 0; }
+        ul.post-list .post-link { font-size: 1.05rem; }
+        ul.post-list .post-date { display: inline; margin-left: 0; color: #9ea7b3; flex-shrink: 0; }
         section.comments { margin-top: 3rem; border-top: 1px solid #7a828e; padding-top: 2rem; }
     </style>
 </head>
 <body>
     <main>
-        <nav class="site-nav"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></nav>
+        {{ if not .IsHome }}<nav class="site-nav"><a href="{{ .Site.BaseURL }}">Back to all posts</a></nav>{{ end }}
         {{ block "main" . }}{{ end }}
     </main>
 </body>

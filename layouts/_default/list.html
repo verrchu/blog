@@ -1,13 +1,16 @@
 {{ define "main" }}
-<header>
-    <h1>{{ .Site.Title }}</h1>
+<header class="home-header">
+    <h1>Evgeniy Terekhin</h1>
 </header>
-<ul class="post-list">
-    {{ range .Pages.ByDate.Reverse }}
-    <li>
-        <a href="{{ .Permalink }}">{{ .Title }}</a>
-        <span class="post-date">{{ .Date.Format "2006-01-02" }}</span>
-    </li>
-    {{ end }}
-</ul>
+<section>
+    <h2>Posts</h2>
+    <ul class="post-list">
+        {{ range .Pages.ByDate.Reverse }}
+        <li>
+            <a class="post-link" href="{{ .Permalink }}">{{ .Title }}</a>
+            <span class="post-date">{{ .Date.Format "2006-01-02" }}</span>
+        </li>
+        {{ end }}
+    </ul>
+</section>
 {{ end }}
