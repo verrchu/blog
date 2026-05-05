@@ -1,4 +1,4 @@
-baseURL = "http://localhost:1313/"
+baseURL = "https://verrchu.github.io/blog/"
 locale = "en-us"
 title = "Blog"
 contentDir = "posts"
