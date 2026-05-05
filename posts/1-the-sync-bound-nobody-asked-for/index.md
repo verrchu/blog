@@ -3,6 +3,9 @@ title: "The `Sync` bound nobody asked for"
 date: 2026-05-04
 ---
 
+`&self` on an async trait method whose returned future must be `Send` implicitly forces `Sync`
+on the impl type — even if neither the trait nor its callers ever ask for `Sync`.
+
 Most async runtimes spawn futures onto a thread pool, which means a spawned future
 has to be safe to move between threads.
 [`tokio::spawn`](https://docs.rs/tokio/1.52.2/tokio/task/fn.spawn.html) makes the
@@ -15,14 +18,7 @@ where
     F::Output: Send + 'static,
 ```
 
-`F: Send` cascades through everything the future captures. There are exceptions[^1],
-but on a typical async codebase `F: Send` is the default — and it's the assumption
-the rest of this post builds on.
-
-[^1]: Notably [`tokio::task::spawn_local`](https://docs.rs/tokio/1.52.2/tokio/task/fn.spawn_local.html)
-    inside a [`LocalSet`](https://docs.rs/tokio/1.52.2/tokio/task/struct.LocalSet.html),
-    or runtime [`block_on`](https://docs.rs/tokio/1.52.2/tokio/runtime/struct.Runtime.html#method.block_on)
-    with no spawning at all.
+`F: Send` cascades through everything the future captures.
 
 Whenever a future captures a reference and itself has to be `Send`, two facts about
 Rust's reference types matter:
@@ -31,18 +27,15 @@ Rust's reference types matter:
 - `&mut T: Send` only requires `T: Send`.
 
 So a `Send` future that captures `&mut T` only needs `T: Send`, but a `Send` future
-that captures `&T` needs `T: Sync`. This asymmetry affects async trait design: taking
-`&self` in a method whose returned future must be `Send` forces a `Sync` bound on the
-impl type — even when nothing in the trait or its consumers explicitly asks for `Sync`.
+that captures `&T` needs `T: Sync`.
 
-In the example below, `&self` implicitly demands `MyWorker: Sync`. Everything compiles
-because `MyWorker` is trivially `Send + Sync`.
+In the example below, everything compiles because `MyWorker` is trivially `Send + Sync`.
 
 {{< code src="examples/step-1.rs" lang="rust" >}}
 
 The `Worker` trait only visibly asks for `Send`, so giving the impl type interior mutability
-seems perfectly reasonable. But `Cell` is `Send` and `!Sync`, so it makes `MyWorker` `!Sync`
-too — and that breaks the implicit `Sync` requirement from `&self`.
+seems reasonable. But `Cell` is `Send` and `!Sync`, so it makes `MyWorker` `!Sync` too, which
+breaks the `Sync` requirement coming from `&self`.
 
 {{< code src="examples/step-2.rs" lang="rust" >}}
 
@@ -67,32 +60,31 @@ note: required by a bound in `Worker::work::{anon_assoc#0}`
    |                                                  ^^^^ required by this bound in `Worker::work::{anon_assoc#0}`
 ```
 
-The error walks the chain: the async `work` captures `&self` as `&MyWorker`; for
+The error walks the chain: `fn work` captures `&self` as `&MyWorker`; for
 the returned future to satisfy `+ Send`, `&MyWorker` has to be `Send`; and
-`&T: Send` only holds when `T: Sync`. The `&self` parameter has been implicitly
-demanding `Sync` on `Self` all along — `Cell` just made the demand visible.
+`&T: Send` only holds when `T: Sync`. The `&self` parameter has been demanding
+`Sync` on `Self` all along — `Cell` just made the demand visible.
 
-There are two ways out:
+The cheap fix is to make `Self: Sync`: swap the non-`Sync` interior-mutability primitive
+for a `Sync` one (a `Mutex`, an `RwLock`, an atomic). The impl type becomes `Sync` and the
+trait compiles unchanged. But we've added synchronisation overhead on every state access for
+a worker whose state is only ever touched from inside a single spawned task. Suboptimal™.
 
-1. **Make `Self: Sync`.** Replace the non-`Sync` interior-mutability primitive with a
-   `Sync` one — `Mutex`, `RwLock`, an atomic. The impl type becomes `Sync`, and the
-   trait compiles unchanged. But you've added synchronisation overhead to every state
-   access, for a worker whose state is only ever touched from inside a single spawned
-   task. It's suboptimal™.
-2. **Switch `&self` to `&mut self`.** `&mut T: Send` requires only `T: Send`,
-   with no involvement of `Sync` at all:
+The better move is to switch `&self` to `&mut self`. `&mut T: Send` requires only `T: Send`,
+no `Sync` involved:
 
 {{< code src="examples/step-3.rs" lang="rust" >}}
 
 This compiles. Now the trait carries no `Sync` requirement anywhere.
 
-Underneath all of this is `&mut T` being the *unique* reference, not the *mutable*
-one. In Rust the instinct is often to reach for `&` over `&mut` — in trait method
-signatures, in function parameters, etc. — to *tighten* the contract: no
-mutation allowed. Here it goes the other way. Using `&mut self` instead of
-`&self` guarantees unique access to `Self` for the duration of the call, which
-rules out cross-thread sharingSo the `Sync` bound disappears, and the "looser"
-receiver actually buys us a *smaller* bound surface, not a bigger one.
+Underneath all of this is `&mut T` being the unique reference, not the mutable one.
+The instinct in Rust is to reach for `&` over `&mut` to tighten the contract: no
+mutation allowed. Here it goes the other way. `&mut self` guarantees unique access to
+`Self` for the duration of the call, which rules out cross-thread sharing and drops
+the `Sync` bound with it.
 
-More on mutability vs ownership can be found
-[here](https://smallcultfollowing.com/babysteps/blog/2014/05/13/focusing-on-ownership/).
+## Links
+
+- Niko Matsakis,
+  [*Focusing on ownership*](https://smallcultfollowing.com/babysteps/blog/2014/05/13/focusing-on-ownership/)
+  — the canonical writeup on `&mut` as uniqueness rather than mutation.
