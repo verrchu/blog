@@ -1,0 +1,21 @@
+[package]
+name = "guarding-select-branches"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+tokio = { version = "1", default-features = false, features = ["rt", "sync", "macros"] }
+
+[[example]]
+name = "step-1"
+path = "examples/step-1.rs"
+crate-type = ["lib"]
+
+[[example]]
+name = "step-2"
+path = "examples/step-2.rs"
+crate-type = ["lib"]
