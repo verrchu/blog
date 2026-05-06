@@ -7,3 +7,6 @@ resources/
 
 # Rust
 target/
+
+# Local clone of rust-lang/this-week-in-rust for submitting posts
+this-week-in-rust/
