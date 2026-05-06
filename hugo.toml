@@ -4,6 +4,8 @@ title = "Blog"
 contentDir = "posts"
 
 [markup]
+  [markup.goldmark.renderer]
+    unsafe = true
   [markup.highlight]
     style = "github-dark"
     noClasses = true

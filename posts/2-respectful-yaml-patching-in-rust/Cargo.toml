@@ -1,0 +1,29 @@
+[package]
+name = "respectful-yaml-patching-in-rust"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+indexmap = "2"
+serde_yaml = "0.9"
+
+yamlpath = "1"
+yamlpatch = "1"
+yaml-edit = "0.2"
+rust-yaml = "0.0.5"
+yamp = "0.1"
+
+[[example]]
+name = "yamlpatch-replace-list"
+path = "examples/yamlpatch-replace-list.rs"
+
+[[example]]
+name = "yamlpatch-flow-list"
+path = "examples/yamlpatch-flow-list.rs"
+
+[[example]]
+name = "yamlpatch-rotate-replace-list"
+path = "examples/yamlpatch-rotate-replace-list.rs"

@@ -1,0 +1,15 @@
+# outer comment
+asset_groups:
+  majors:    # majors group comment
+    - BTC
+    - ETH
+    - SOL
+  # memes group outer comment
+  memes:
+    -  DOGE       # asset comment
+    - PEPE
+  default:
+    # default group inner comment
+    - 1INCH
+    - ATOM
+    - LINK
