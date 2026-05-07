@@ -1,0 +1,38 @@
+[package]
+name = "sidecars-need-a-weak-sender"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+tokio = { version = "1", default-features = false, features = ["rt", "sync", "time", "macros"] }
+
+[[example]]
+name = "rc-weak"
+path = "examples/rc-weak.rs"
+crate-type = ["lib"]
+
+[[example]]
+name = "counter"
+path = "examples/counter.rs"
+crate-type = ["lib"]
+
+[[example]]
+name = "ticker"
+path = "examples/ticker.rs"
+crate-type = ["lib"]
+
+[[example]]
+name = "sidecar"
+path = "examples/sidecar.rs"
+crate-type = ["lib"]
+
+[[example]]
+name = "generic"
+path = "examples/generic.rs"
+crate-type = ["lib"]
+
+[[example]]
+name = "generic-weak"
+path = "examples/generic-weak.rs"
+crate-type = ["lib"]
