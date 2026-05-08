@@ -27,11 +27,13 @@
         .highlight:has(code.language-text) > div { background: #0a0c10 !important; }
         blockquote { border-left: 3px solid #7a828e; padding-left: 1rem; color: #9ea7b3; margin-left: 0; }
         hr { border: 0; border-top: 1px solid #7a828e; margin: 2rem 0; }
-        nav.site-nav { margin-bottom: 2rem; font-size: 0.9rem; }
-        nav.site-nav a { color: #9ea7b3; text-decoration: none; }
-        nav.site-nav a:hover { color: #f0f3f6; }
-        .home-header { padding-bottom: 1rem; border-bottom: 1px solid #7a828e; margin-bottom: 1.5rem; }
-        .home-header h1 { margin-bottom: 0; }
+        .site-header { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; padding-bottom: 0.75rem; border-bottom: 1px solid #7a828e; margin-bottom: 2rem; }
+        .site-header .site-name { color: #f0f3f6; text-decoration: none; font-weight: 600; font-size: 1.05rem; }
+        .site-header .site-name:hover { text-decoration: underline; }
+        .site-header nav { font-size: 0.9rem; }
+        .site-header nav a { color: #9ea7b3; text-decoration: none; margin-left: 1rem; }
+        .site-header nav a:first-child { margin-left: 0; }
+        .site-header nav a:hover { color: #f0f3f6; }
         ul.post-list { list-style: none; padding: 0; }
         ul.post-list li { padding: 0.75rem 0; border-bottom: 1px solid #272b33; display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
         ul.post-list li:last-child { border-bottom: 0; }
@@ -48,7 +50,13 @@
 </head>
 <body>
     <main>
-        {{ if not .IsHome }}<nav class="site-nav"><a href="{{ .Site.BaseURL }}">Back to all posts</a></nav>{{ end }}
+        <header class="site-header">
+            <a class="site-name" href="{{ .Site.BaseURL }}">Evgeniy Terekhin</a>
+            <nav>
+                <a href="{{ .Site.BaseURL }}">Posts</a>
+                <a href="{{ absURL "index.xml" }}">RSS</a>
+            </nav>
+        </header>
         {{ block "main" . }}{{ end }}
     </main>
 </body>
