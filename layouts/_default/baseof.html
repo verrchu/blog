@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
     <link rel="alternate" type="application/rss+xml" href="{{ absURL "index.xml" }}" title="{{ .Site.Title }}">
+    <link rel="icon" type="image/svg+xml" href="{{ absURL "favicon.svg" }}">
 
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #f0f3f6; background: #0a0c10; margin: 0; }
