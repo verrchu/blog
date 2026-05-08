@@ -1,0 +1,10 @@
+{{ define "title" }}404 — {{ .Site.Title }}{{ end }}
+{{ define "main" }}
+<article>
+    <header>
+        <h1>Not found</h1>
+    </header>
+    <p>The page you're looking for doesn't exist.</p>
+    <p><a href="{{ .Site.BaseURL }}">Back to posts</a></p>
+</article>
+{{ end }}
