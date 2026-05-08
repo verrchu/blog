@@ -14,9 +14,10 @@ spent the past several years writing software professionally using it.
 Right now I work at [Gravity Team][gravity], a crypto market maker, where I build trading
 infrastructure.
 
-Here I write on (hopefully) interesting technical stuff I encountered at work or otherwise.
+Here I write about (hopefully) interesting technical stuff I encountered at work or otherwise.
 
-Feel free to reach out via email at [e_terekhin@pm.me](mailto:e_terekhin@pm.me) or
-[LinkedIn](https://www.linkedin.com/in/eterekhin/).
+Feel free to reach out via [email][email] or [LinkedIn][linkedin].
 
 [gravity]: https://gravityteam.co/
+[email]: mailto:e_terekhin@pm.me
+[linkedin]: https://www.linkedin.com/in/eterekhin/
