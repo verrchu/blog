@@ -1,7 +1,7 @@
 baseURL = "https://verrchu.github.io/blog/"
 locale = "en-us"
 title = "Blog"
-ignoreFiles = ['/target/']
+ignoreFiles = ['/target/', '/src/', '/examples/', '/fixtures/', 'Cargo\.(toml|lock)$']
 
 [markup]
   [markup.goldmark.renderer]
