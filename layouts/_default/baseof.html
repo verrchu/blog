@@ -6,6 +6,12 @@
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
     <link rel="alternate" type="application/rss+xml" href="{{ absURL "index.xml" }}" title="{{ .Site.Title }}">
     <link rel="icon" type="image/svg+xml" href="{{ absURL "favicon.svg" }}">
+    {{- $ogTitle := cond .IsHome .Site.Title .Title }}
+    {{- $ogType := default (cond .IsPage "article" "website") .Params.og_type }}
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:type" content="{{ $ogType }}">
+    <meta property="og:site_name" content="{{ .Site.Title }}">
 
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #f0f3f6; background: #0a0c10; margin: 0; }

@@ -1,6 +1,7 @@
 ---
 title: "About me"
 date: 2026-05-08
+og_type: "website"
 comments: false
 showDate: false
 build:
