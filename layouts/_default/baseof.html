@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+    <title>{{ .Title }} — {{ .Site.Title }}</title>
     <link rel="alternate" type="application/rss+xml" href="{{ absURL "index.xml" }}" title="{{ .Site.Title }}">
     <link rel="icon" type="image/svg+xml" href="{{ absURL "favicon.svg" }}">
-    {{- $ogTitle := cond .IsHome .Site.Title .Title }}
+    {{- $description := default .Site.Params.description .Description }}
     {{- $ogType := default (cond .IsPage "article" "website") .Params.og_type }}
-    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta name="description" content="{{ $description }}">
+    <meta property="og:title" content="{{ .Title }}">
+    <meta property="og:description" content="{{ $description }}">
     <meta property="og:url" content="{{ .Permalink }}">
     <meta property="og:type" content="{{ $ogType }}">
     <meta property="og:site_name" content="{{ .Site.Title }}">
+    <meta property="og:locale" content="en_US">
 
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #f0f3f6; background: #0a0c10; margin: 0; }

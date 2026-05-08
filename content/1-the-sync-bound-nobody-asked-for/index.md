@@ -1,6 +1,7 @@
 ---
 title: "The `Sync` bound nobody asked for"
 date: 2026-05-04
+description: "The hidden Sync bound &self imposes on async trait impls, and a way to lift it."
 ---
 
 [src]: https://github.com/verrchu/blog/tree/main/content/1-the-sync-bound-nobody-asked-for

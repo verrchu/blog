@@ -2,6 +2,10 @@ baseURL = "https://verrchu.github.io/blog/"
 locale = "en-us"
 title = "Evgeniy Terekhin"
 ignoreFiles = ['/target/', '/src/', '/examples/', '/fixtures/', 'Cargo\.(toml|lock)$']
+disableKinds = ['taxonomy', 'term']
+
+[params]
+description = "Technical blog"
 
 [markup]
   [markup.goldmark.renderer]

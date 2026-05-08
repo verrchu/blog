@@ -1,6 +1,7 @@
 ---
 title: "\"Respectful\" YAML patching in Rust"
 date: 2026-05-08
+description: "Finding a Rust library that can patch YAML files without losing their comments or formatting."
 ---
 
 [archive]: https://github.com/dtolnay/serde-yaml/commit/3ba8462f7d3b603d832e0daeb6cfc7168a673d7a
