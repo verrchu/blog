@@ -9,6 +9,7 @@ date: 2026-05-08
 [ry-demo]: https://github.com/elioetibr/rust-yaml/blob/main/examples/comment_preservation_demo.rs
 [crates-io]: https://crates.io/
 [lib-rs]: https://lib.rs/
+[src]: https://github.com/verrchu/blog/tree/main/content/2-respectful-yaml-patching-in-rust
 
 Patching a YAML file programmatically is straightforward in principle: parse, modify,
 serialize. Ideally the process should also be *respectful* — that is, preserve the
@@ -395,4 +396,10 @@ Caused by:
 `yamlpath` + `yamlpatch` is the only option that comes truly close to "respectful"
 patching as defined here. It is very much usable in practice, even though it doesn't
 cover every case out of the box.
+
+---
+
+*Full accompanying source code can be found [here][src]. Built with `rustc 1.95.0`.
+Library versions used: `yamlpath` 1.24.1, `yamlpatch` 1.24.1, `yaml-edit` 0.2.1,
+`rust-yaml` 0.0.5, `yamp` 0.1.0.*
 

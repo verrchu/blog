@@ -3,6 +3,8 @@ title: "The `Sync` bound nobody asked for"
 date: 2026-05-04
 ---
 
+[src]: https://github.com/verrchu/blog/tree/main/content/1-the-sync-bound-nobody-asked-for
+
 `&self` on an async trait method whose returned future must be `Send` implicitly forces `Sync`
 on the impl type — even if neither the trait nor its callers ever ask for `Sync`.
 
@@ -88,3 +90,8 @@ the `Sync` bound with it.
 - Niko Matsakis,
   [*Focusing on ownership*](https://smallcultfollowing.com/babysteps/blog/2014/05/13/focusing-on-ownership/)
   — the canonical writeup on `&mut` as uniqueness rather than mutation.
+
+---
+
+*Full accompanying source code can be found [here][src]. Built with `rustc 1.95.0`.
+Library versions used: `tokio` 1.52.2.*
