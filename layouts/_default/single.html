@@ -2,7 +2,7 @@
 <article>
     <header>
         <h1>{{ .Title }}</h1>
-        <p class="post-date">{{ .Date.Format "January 2, 2006" }}</p>
+        {{ if not (eq .Params.showDate false) }}<p class="post-date">{{ .Date.Format "January 2, 2006" }}</p>{{ end }}
     </header>
     {{ .Content }}
 </article>
