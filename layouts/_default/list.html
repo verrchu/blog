@@ -1,9 +1,5 @@
 {{ define "main" }}
-<header class="home-header">
-    <h1>Evgeniy Terekhin</h1>
-</header>
 <section>
-    <h2>Posts</h2>
     <ul class="post-list">
         {{ range .Pages.ByDate.Reverse }}
         <li>

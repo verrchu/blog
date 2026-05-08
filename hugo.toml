@@ -1,7 +1,6 @@
 baseURL = "https://verrchu.github.io/blog/"
 locale = "en-us"
 title = "Blog"
-contentDir = "posts"
 
 [markup]
   [markup.goldmark.renderer]
