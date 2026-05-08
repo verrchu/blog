@@ -1,6 +1,6 @@
 baseURL = "https://verrchu.github.io/blog/"
 locale = "en-us"
-title = "Blog"
+title = "Evgeniy Terekhin"
 ignoreFiles = ['/target/', '/src/', '/examples/', '/fixtures/', 'Cargo\.(toml|lock)$']
 
 [markup]

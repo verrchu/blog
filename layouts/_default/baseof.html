@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+    <link rel="alternate" type="application/rss+xml" href="{{ absURL "index.xml" }}" title="{{ .Site.Title }}">
+
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #f0f3f6; background: #0a0c10; margin: 0; }
         main { max-width: 760px; margin: 2rem auto; padding: 0 1.25rem; }
