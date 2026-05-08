@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ block "title" . }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+    <link rel="canonical" href="{{ .Permalink }}">
     <link rel="alternate" type="application/rss+xml" href="{{ absURL "index.xml" }}" title="{{ .Site.Title }}">
     <link rel="icon" type="image/svg+xml" href="{{ absURL "favicon.svg" }}">
     {{- $description := default .Site.Params.description .Description }}

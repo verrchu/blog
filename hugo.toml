@@ -3,6 +3,7 @@ locale = "en-us"
 title = "Evgeniy Terekhin"
 ignoreFiles = ['/target/', '/src/', '/examples/', '/fixtures/', 'Cargo\.(toml|lock)$']
 disableKinds = ['taxonomy', 'term']
+enableRobotsTXT = true
 
 [params]
 description = "Technical blog"
