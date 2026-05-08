@@ -8,6 +8,6 @@
 {{- $src := .Get "src" -}}
 {{- $lang := .Get "lang" | default "text" -}}
 {{- $page_dir := .Page.File.Dir -}}
-{{- $full_path := path.Join "posts" $page_dir $src -}}
+{{- $full_path := path.Join "content" $page_dir $src -}}
 {{- $code := readFile $full_path -}}
 {{- highlight (trim $code "\n") $lang "linenos=table" -}}
