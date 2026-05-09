@@ -11,6 +11,29 @@ path = "src/lib.rs"
 tokio = { version = "1", default-features = false, features = ["rt"] }
 static_assertions = "1"
 
+[lints.rust]
+dead_code = "allow"
+
+[[example]]
+name = "demo-1-1"
+path = "examples/demo-1.1.rs"
+crate-type = ["lib"]
+
+[[example]]
+name = "demo-1-2"
+path = "examples/demo-1.2.rs"
+crate-type = ["lib"]
+
+[[example]]
+name = "demo-2-1"
+path = "examples/demo-2.1.rs"
+crate-type = ["lib"]
+
+[[example]]
+name = "demo-2-2"
+path = "examples/demo-2.2.rs"
+crate-type = ["lib"]
+
 [[example]]
 name = "step-1"
 path = "examples/step-1.rs"

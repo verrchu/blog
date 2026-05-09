@@ -1,23 +1,20 @@
-use std::cell::Cell;
+pub struct Foreign(std::cell::Cell<()>);
 
-pub trait Worker {
-    fn work(&self) -> impl Future<Output = ()> + Send;
+struct MyTask {
+    foreign: Foreign,
 }
 
-#[allow(dead_code)]
-struct MyWorker(Cell<()>);
+static_assertions::assert_impl_all!(MyTask: Send);
+static_assertions::assert_not_impl_any!(MyTask: Sync);
 
-static_assertions::assert_impl_all!(MyWorker: Send);
-static_assertions::assert_not_impl_any!(MyWorker: Sync);
-
-impl Worker for MyWorker {
-    async fn work(&self) {}
+pub trait Task {
+    fn run(&self) -> impl Future<Output = ()> + Send;
 }
 
-pub fn spawn<W: Worker + Send + 'static>(w: W) {
-    tokio::spawn(async move {
-        loop {
-            w.work().await;
-        }
-    });
+impl Task for MyTask {
+    async fn run(&self) {}
+}
+
+pub fn spawn<T: Task + Send + 'static>(t: T) {
+    tokio::spawn(async move { t.run().await });
 }

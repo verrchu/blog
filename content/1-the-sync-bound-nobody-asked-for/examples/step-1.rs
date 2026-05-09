@@ -1,21 +1,15 @@
-pub trait Worker {
-    fn work(&self) -> impl Future<Output = ()> + Send;
+struct MyTask;
+
+static_assertions::assert_impl_all!(MyTask: Send, Sync);
+
+pub trait Task {
+    fn run(&self) -> impl Future<Output = ()> + Send;
 }
 
-#[allow(dead_code)]
-struct MyWorker;
-
-static_assertions::assert_impl_all!(MyWorker: Send);
-static_assertions::assert_impl_all!(MyWorker: Sync);
-
-impl Worker for MyWorker {
-    async fn work(&self) {}
+impl Task for MyTask {
+    async fn run(&self) {}
 }
 
-pub fn spawn<W: Worker + Send + 'static>(w: W) {
-    tokio::spawn(async move {
-        loop {
-            w.work().await;
-        }
-    });
+pub fn spawn<T: Task + Send + 'static>(t: T) {
+    tokio::spawn(async move { t.run().await });
 }
