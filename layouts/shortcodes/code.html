@@ -2,12 +2,15 @@
   Include a file from the page bundle as a syntax-highlighted code block.
 
   Usage: {{< code src="examples/step-1.rs" lang="rust" >}}
+         {{< code src="fixtures/assets.yaml" lang="yaml" linenos="false" >}}
 
   `src` is interpreted relative to the page bundle's directory.
+  `linenos` is forwarded to Hugo's highlight options (default "table").
 */ -}}
 {{- $src := .Get "src" -}}
 {{- $lang := .Get "lang" | default "text" -}}
+{{- $linenos := .Get "linenos" | default "table" -}}
 {{- $page_dir := .Page.File.Dir -}}
 {{- $full_path := path.Join "content" $page_dir $src -}}
 {{- $code := readFile $full_path -}}
-{{- highlight (trim $code "\n") $lang "linenos=table" -}}
+{{- highlight (trim $code "\n") $lang (printf "linenos=%s" $linenos) -}}

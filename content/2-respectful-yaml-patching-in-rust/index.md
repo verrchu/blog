@@ -83,32 +83,16 @@ comment preservation turns up four candidates:
 
 ## The experiment
 
-The example below uses a simplified config for a crypto trading bot. The assets
-are grouped into named groups with a catch-all `default` group:
+The example below uses a simplified config for a trading bot. The assets are
+grouped into named groups with a catch-all `default` group:
 
-```yaml
-# outer comment
-asset_groups:
-  majors:    # majors group comment
-    - BTC
-    - ETH
-    - SOL
-  # memes group outer comment
-  memes:
-    -  DOGE       # asset comment
-    - PEPE
-  default:
-    # default group inner comment
-    - 1INCH
-    - ATOM
-    - LINK
-```
+{{< code src="fixtures/assets.yaml" lang="yaml" linenos="false" >}}
 
 The toy CLI used here supports two operations:
 
-- `list-assets X,Y,Z` — append the listed assets to the `default` group, in alphabetical
+- `list-assets ASSET1,ASSET2` — append the listed assets to the `default` group, in alphabetical
   order.
-- `delist-assets X,Y,Z` — remove the listed assets from whichever group they live in. If
+- `delist-assets ASSET1,ASSET2` — remove the listed assets from whichever group they live in. If
   a group goes empty, drop the group entirely.
 
 ## Listing assets
@@ -121,7 +105,7 @@ list-assets 1INCH,BTC,XRP,BNB
 ```
 
 - `1INCH` is already in `default` → no-op.
-- `BTC` is already in `majors` → also no-op.
+- `BTC` is already in `group_abc` → also no-op.
 - `XRP` and `BNB` are new and should land in `default`, alphabetically sorted alongside
   the existing items.
 
@@ -130,12 +114,12 @@ The expected output:
 ```yaml
 # outer comment
 asset_groups:
-  majors:    # majors group comment
+  group_abc:    # group_abc comment
     - BTC
     - ETH
     - SOL
-  # memes group outer comment
-  memes:
+  # group_xyz outer comment
+  group_xyz:
     -  DOGE       # asset comment
     - PEPE
   default:
@@ -153,12 +137,12 @@ asset_groups:
 ```yaml
 # outer comment
 asset_groups:
-  majors:    # majors group comment
+  group_abc:    # group_abc comment
     - BTC
     - ETH
     - SOL
-  # memes group outer comment
-  memes:
+  # group_xyz outer comment
+  group_xyz:
     -  DOGE       # asset comment
     - PEPE
   default:
@@ -178,12 +162,12 @@ outer comment dropped, "default" misindented</summary>
 
 ```yaml
 asset_groups:
-  majors:    # majors group comment
+  group_abc:    # group_abc comment
     - BTC
     - ETH
     - SOL
-  # memes group outer comment
-  memes:
+  # group_xyz outer comment
+  group_xyz:
     -  DOGE       # asset comment
     - PEPE
   default:
@@ -203,11 +187,11 @@ asset_groups:
 ```yaml
 # outer comment
 asset_groups: 
-  majors: 
+  group_abc: 
     - BTC
     - ETH
     - SOL
-  memes: 
+  group_xyz: 
     - DOGE
     - PEPE
   default: 
@@ -218,13 +202,13 @@ asset_groups:
     - INCH
     - LINK
     - XRP
-# majors group comment
+# group_abc comment
 
 # outer comment
 
 # outer comment
 
-# majors group comment
+# group_abc comment
 ```
 
 The comments are scattered (some end up at the bottom of the file, some duplicated),
@@ -260,9 +244,9 @@ delist-assets DOGE,PEPE,BTC,SOL,ATOM,SHIB
 
 That covers every interesting case at once:
 
-- `DOGE` and `PEPE` are both members of `memes`. Removing both should empty the group,
-  which means the whole `memes` group has to be removed.
-- `BTC` and `SOL` come out of `majors`, leaving it with only `ETH`.
+- `DOGE` and `PEPE` are both members of `group_xyz`. Removing both should empty the group,
+  which means the whole `group_xyz` group has to be removed.
+- `BTC` and `SOL` come out of `group_abc`, leaving it with only `ETH`.
 - `ATOM` is removed from `default`.
 - `SHIB` isn't in the file at all; should be a no-op.
 
@@ -271,7 +255,7 @@ The expected output:
 ```yaml
 # outer comment
 asset_groups:
-  majors:    # majors group comment
+  group_abc:    # group_abc comment
     - ETH
   default:
     # default group inner comment
@@ -286,15 +270,15 @@ almost, a single comment rearranged</summary>
 ```yaml
 # outer comment
 asset_groups:
-  majors:    # majors group comment
-    - ETH  # memes group outer comment
+  group_abc:    # group_abc comment
+    - ETH  # group_xyz outer comment
   default:
     # default group inner comment
     - 1INCH
     - LINK
 ```
 
-When the now-empty `memes:` key is removed, the standalone comment that was sitting
+When the now-empty `group_xyz:` key is removed, the standalone comment that was sitting
 on the line above it doesn't get removed with it. Instead it migrates onto the
 nearest surviving content line as an inline comment. The output is valid YAML and
 no comment is lost, but the comment is now attached to the wrong list item.
@@ -306,9 +290,9 @@ no comment is lost, but the comment is now attached to the wrong list item.
 
 ```yaml
 asset_groups:
-  majors:    # majors group comment
+  group_abc:    # group_abc comment
                 - ETH
-  # memes group outer comment
+  # group_xyz outer comment
     default:
     # default group inner comment
                 - 1INCH
@@ -316,7 +300,7 @@ asset_groups:
 ```
 
 The indentation shift on `default:` is not just cosmetic: `default` is now nested
-*inside* `majors` rather than being a sibling. The two top-level groups have
+*inside* `group_abc` rather than being a sibling. The two top-level groups have
 collapsed into one.
 
 </details>

@@ -1,11 +1,11 @@
 # outer comment
 asset_groups:
-  majors:    # majors group comment
+  group_abc:    # group_abc comment
     - BTC
     - ETH
     - SOL
-  # memes group outer comment
-  memes:
+  # group_xyz outer comment
+  group_xyz:
     -  DOGE       # asset comment
     - PEPE
   default:
