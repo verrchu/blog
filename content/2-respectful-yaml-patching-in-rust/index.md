@@ -11,6 +11,7 @@ description: "Finding a Rust library that can patch YAML files without losing th
 [crates-io]: https://crates.io/
 [lib-rs]: https://lib.rs/
 [src]: https://github.com/verrchu/blog/tree/main/content/2-respectful-yaml-patching-in-rust
+[lobsters-thread]: https://lobste.rs/s/fwutce/respectful_yaml_patching_rust
 
 Patching a YAML file programmatically is straightforward in principle: parse, modify,
 serialize. Ideally the process should also be *respectful* — that is, preserve the
@@ -381,6 +382,10 @@ Caused by:
 `yamlpath` + `yamlpatch` is the only option that comes truly close to "respectful"
 patching as defined here. It is very much usable in practice, even though it doesn't
 cover every case out of the box.
+
+## Links
+
+- [Discussion thread on Lobste.rs][lobsters-thread].
 
 ---
 
